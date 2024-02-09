@@ -1,10 +1,8 @@
-package org.iesalandalus.programacion.reservashotel.dominio;
+package org.iesalandalus.programacion.reservashotel.modelo.dominio;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.IllegalFormatCodePointException;
 import java.util.Objects;
 
 public class Reserva {
