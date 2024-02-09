@@ -73,25 +73,25 @@ public class Consola {
 
     public static LocalDate leerFecha(String mensaje){
         DateTimeFormatter formatoFecha= DateTimeFormatter.ofPattern(Huesped.FORMATO_FECHA);
+        while(!mensaje.matches("[0-3][0-9]/[01][0-9]/[0-9]{4}")) {
+            System.out.println("Introduzca fecha hora correcta");
+            mensaje = Entrada.cadena();
+        }
+
         LocalDate formateada= LocalDate.parse(mensaje, formatoFecha);
-        /*LocalDate fecha=null;
-        do{
-            try{
-                System.out.println("Introduzca el dia");
-                int dia=Entrada.entero();
-                System.out.println("Introduzca el mes");
-                int mes=Entrada.entero();
-                System.out.println("Introduzca el año");
-                int anio=Entrada.entero();
 
-                fecha=LocalDate.of(anio, mes , dia);
+        return formateada;
+    }
 
+    public static LocalDate leerFechaHora(String mensaje){
+        DateTimeFormatter formatoFechaHora= DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA);
+        while(!mensaje.matches("[0-3][0-9]/[01][0-9]/[0-9]{4} [ ] [0-2][0-9]-[0-5][0-9]-[0-5][0-9]")){
+            System.out.println("Introduzca fecha hora correcta");
+            mensaje=Entrada.cadena();
 
-            }catch (DateTimeException e){
-                System.err.println("Error, la fecha introducida no es válida");
-            }
-        }while (fecha==null);
-       return fecha;*/
+        }
+        LocalDate formateada= LocalDate.parse(mensaje, formatoFechaHora);
+
         return formateada;
     }
 
@@ -151,10 +151,20 @@ public class Consola {
 
     public static Reserva leerReserva(){
         Huesped huesped=getHuespedPorDni();
-        //huesped=
-        //TODO ESTOOOOOOOOOOOO
+       Habitacion habitacion;
+       habitacion=leerHabitacion();
+       Regimen regimen= leerRegimen();
+        System.out.println("Introduce una fecha de inicio (dd/MM/yyyy): ");
+       LocalDate fechaIni=leerFecha(Entrada.cadena());
+        System.out.println("Introduce una fecha de fin (dd/MM/yyyy): ");
+       LocalDate fechaFin=leerFecha(Entrada.cadena());
 
-        return null;
+       int numPer;
+
+        System.out.println("Introduce numero de personas");
+        numPer=Entrada.entero();
+
+    return new Reserva(huesped, habitacion, regimen, fechaIni, fechaFin, numPer);
     }
 
 
