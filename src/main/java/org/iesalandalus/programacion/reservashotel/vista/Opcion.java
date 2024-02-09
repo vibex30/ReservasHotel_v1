@@ -1,20 +1,23 @@
 package org.iesalandalus.programacion.reservashotel.vista;
 
 public enum Opcion {
-//TODO QUITAR TODOS LOS NUMEROS
-    SALIR("1.-Salir"),
-    INSERTAR_HUESPED("2.-Insertar huesped"),
-    BUSCAR_HUESPED("3.-Buscar huesped"),
-    BORRAR_HUESPED("4.-Borrar huesped"),
-    MOSTRAR_HUESPEDES("5.-Mostrar huesped"),
-    INSERTAR_HABITACION("6.-Insertar habiatación"),
-    BUSCAR_HABITACION("7.-Buscar habitación"),
-    BORRAR_HABITACION("8.-Borrar habitación"),
+
+    SALIR("Salir"),
+    INSERTAR_HUESPED("Insertar huesped"),
+    BUSCAR_HUESPED("Buscar huesped"),
+    BORRAR_HUESPED("Borrar huesped"),
+    MOSTRAR_HUESPEDES("Mostrar huesped"),
+    INSERTAR_HABITACION("Insertar habiatación"),
+    BUSCAR_HABITACION("Buscar habitación"),
+    BORRAR_HABITACION("Borrar habitación"),
     MOSTRAR_HABITACIONES("Mostrar habitaciones"),
     INSERTAR_RESERVA("Insertar reserva"),
     ANULAR_RESERVA("Anular reserva"),
     MOSTRAR_RESERVAS("Mostrar reservas"),
-    CONSULTAR_DISPONIBILIDAD("Consultar disponibilidad");
+    CONSULTAR_DISPONIBILIDAD("Consultar disponibilidad"),
+    REALIZAR_CHECKIN("Realizar check in"),
+    REALIZAR_CHECKOUT("Realizar check out");
+
 
 
 

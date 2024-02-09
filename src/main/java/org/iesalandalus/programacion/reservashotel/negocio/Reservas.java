@@ -8,6 +8,7 @@ import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 
@@ -136,6 +137,13 @@ public class Reservas {
         return Arrays.copyOf(reservasTipoHabitacion, j);
 
     }
+
+
+
+
+
+
+
     public Reserva[] getReservasFuturas(Habitacion habitacion) {
         Reserva[] reservasFuturasHabitacion = new Reserva[this.tamano];
         int j = 0;
@@ -148,6 +156,35 @@ public class Reservas {
         }
         return Arrays.copyOf(reservasFuturasHabitacion, j);
     }
+
+    public void realizarCheckIn(Reserva reserva, LocalDateTime fecha){
+        if(reserva==null)
+            throw new NullPointerException("Reserva nula");
+        if(fecha==null)
+            throw new NullPointerException("Fecha nula");
+        if(fecha.isBefore(reserva.getFechaInicioReserva().atStartOfDay()) || fecha.isAfter(reserva.getFechaFinReserva().atStartOfDay()))
+            throw new IllegalArgumentException("La fecha de inicio  de reserva no puede ser posterior al check in");
+
+
+        reserva.setCheckIn(fecha);
+
+
+    }
+
+    public void realizarCheckOut (Reserva reserva, LocalDateTime fecha){
+        if(reserva==null)
+            throw new NullPointerException("check out nulo");
+        if(fecha==null)
+            throw new NullPointerException("Fecha nula111111");
+        if(fecha.isAfter(reserva.getFechaInicioReserva().atStartOfDay()) || fecha.isBefore(reserva.getFechaFinReserva().atStartOfDay()))
+            throw new IllegalArgumentException("La fecha de inicio  de reserva no puede ser posterior al check in");
+
+        reserva.setCheckOut(fecha);
+    }
+
+
+
+
 
 }
 
