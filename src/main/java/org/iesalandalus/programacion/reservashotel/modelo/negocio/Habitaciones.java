@@ -1,6 +1,7 @@
 package org.iesalandalus.programacion.reservashotel.modelo.negocio;
 
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.Habitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Huesped;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.TipoHabitacion;
 
 import javax.naming.OperationNotSupportedException;
@@ -8,25 +9,25 @@ import javax.naming.OperationNotSupportedException;
 public class Habitaciones {
     private int capacidad;
     private int tamano;
-    private Habitacion[] listaHabitaciones;
+    private Habitacion[] coleccionHabitaciones;
 
     // Constructor
     public Habitaciones(int capacidad) {
         this.capacidad = capacidad;
         this.tamano = 0;
-        this.listaHabitaciones = new Habitacion[capacidad];
+        this.coleccionHabitaciones = new Habitacion[capacidad];
     }
 
 
     public Habitacion[] get(TipoHabitacion tipoHabitacion) {
-        if (listaHabitaciones == null)
+        if (coleccionHabitaciones == null)
             throw new NullPointerException("Error, la lista no puede ser nula");
         Habitacion[] copia = new Habitacion[this.capacidad];
 
 
         int puntero = 0;
 
-        for (Habitacion elemento : listaHabitaciones)
+        for (Habitacion elemento : coleccionHabitaciones)
             if (elemento.getTipoHabitacion() == tipoHabitacion) {
                 copia[puntero] = new Habitacion(elemento);
                 puntero++;
@@ -50,7 +51,7 @@ public class Habitaciones {
     private Habitacion[] copiaProfundaHabitaciones() {
         Habitacion[] copia = new Habitacion[capacidad];
         for (int i = 0; i < tamano; i++) {
-            copia[i] = listaHabitaciones[i];
+            copia[i] = coleccionHabitaciones[i];
         }
         return copia;
     }
@@ -67,23 +68,29 @@ public class Habitaciones {
 
     // Método para insertar una habitacion
     public void insertar(Habitacion habitacion) throws OperationNotSupportedException{
+        if(habitacion==null)
+            throw new NullPointerException("Error, la habitacion no puede ser nula");
+
+
+        int indice= buscarIndice(habitacion);
+
 
         if (tamanoSuperado(tamano)) {
             throw new IllegalStateException("ERROR: Se ha superado el tamaño permitido.");
-        }
-        if(buscarIndice(habitacion)!=-1){
-            throw new OperationNotSupportedException("Error not supor");
-        }
-        if (buscarIndice(habitacion) == -1) {
-            listaHabitaciones[tamano++] = habitacion;
-        }
+        } else if (indice>=0)
+            throw new OperationNotSupportedException("Error, la habitacion ya esta registrada");
+        else
+            coleccionHabitaciones[tamano] = new Habitacion(habitacion);
+            tamano++;
 
     }
 
     // Método para buscar el índice de una habitacion
     private int buscarIndice(Habitacion habitacion) {
+        if(habitacion==null)
+            throw new NullPointerException("Error, introduce un valor válido");
         for (int i = 0; i < tamano; i++) {
-            if (listaHabitaciones[i].equals(habitacion)) {
+            if (coleccionHabitaciones[i].equals(habitacion)) {
                 return i;
             }
         }
@@ -92,27 +99,34 @@ public class Habitaciones {
 
     // Método para verificar si el tamaño ha sido superado
     private boolean tamanoSuperado(int indice) {
-        return indice >= capacidad;
+        return indice >= tamano;
+    }
+    private boolean capacidadSuperada(int indice){
+        return indice>=capacidad;
     }
 
     // Método para buscar una habitacion
     public Habitacion buscar(Habitacion habitacion) {
+        if(habitacion==null)
+            throw new NullPointerException("Error, introduce un valor correcto");
         int indice = buscarIndice(habitacion);
-        return (indice != -1) ? listaHabitaciones[indice] : null;
+        return (indice != -1) ? coleccionHabitaciones[indice] : null;
     }
 
     // Método para borrar una habitacion
     public void borrar(Habitacion habitacion) throws OperationNotSupportedException {
-
+        if(habitacion==null)
+            throw new NullPointerException("Error, no puede ser nulo");
         int indice = buscarIndice(habitacion);
         if (indice != -1) {
             desplazarUnaPosicionHaciaIzquierda(indice);
             tamano--;
 
-        }
-//AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII ES
+        }else
+            throw new OperationNotSupportedException("la habitacion a borrar no existe");
+
         if(buscarIndice(habitacion)!=-1){
-            throw new OperationNotSupportedException("Error not suporTEEEEEEEDDDD");
+            throw new OperationNotSupportedException("Error, notSupported");
         }
 
 
@@ -121,8 +135,9 @@ public class Habitaciones {
     // Método para desplazar una posición hacia la izquierda
     private void desplazarUnaPosicionHaciaIzquierda(int indice) {
         for (int i = indice; i < tamano - 1; i++) {
-            listaHabitaciones[i] = listaHabitaciones[i + 1];
+            coleccionHabitaciones[i] = coleccionHabitaciones[i + 1];
         }
+        coleccionHabitaciones[tamano-1]=null;
     }
 
 }

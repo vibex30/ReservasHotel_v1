@@ -162,7 +162,8 @@ public class Huesped {
     private void setFechaNacimiento(LocalDate fechaNacimiento) {
         if (fechaNacimiento==null)
             throw new NullPointerException("ERROR: La fecha de nacimiento de un huésped no puede ser nula.");
-
+        if(fechaNacimiento.isAfter(LocalDate.now()))
+            throw new IllegalArgumentException("La fecha de nacimiento no puede ser despues que el dia de hoy");
         this.fechaNacimiento = fechaNacimiento;
     }
 

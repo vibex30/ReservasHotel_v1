@@ -8,7 +8,7 @@ public class Huespedes {
 
     private int capacidad;
     private int tamano;
-    private Huesped[] listaHuespedes;
+    private Huesped[] coleccionHuespedes;
 
         // Constructor
     public Huespedes(int capacidad) {
@@ -16,7 +16,7 @@ public class Huespedes {
             throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
         this.capacidad = capacidad;
         this.tamano = 0;
-        this.listaHuespedes = new Huesped[capacidad];
+        this.coleccionHuespedes = new Huesped[capacidad];
     }
 
 
@@ -28,7 +28,7 @@ public class Huespedes {
     private Huesped[] copiaProfundaHuespedes() {
         Huesped[] copiaProfunda = new Huesped[capacidad];
             for (int i = 0; i < tamano; i++) {
-                copiaProfunda[i] = listaHuespedes[i];
+                copiaProfunda[i] = coleccionHuespedes[i];
             }
             return copiaProfunda;
     }
@@ -47,11 +47,25 @@ public class Huespedes {
     public void insertar(Huesped huesped) throws OperationNotSupportedException{
         if (huesped==null)
             throw new NullPointerException("ERROR: No se puede insertar un huésped nulo.");
+        
+        
+        int indice= buscarIndice(huesped);
+        
         if (tamanoSuperado(tamano))
             throw new OperationNotSupportedException("El array esta lleno");
+        else if (indice>=0) {
+            //Esto significa que el huesped esta ya en la coleccion
+            // no se puede insertar duplicado
+            throw new OperationNotSupportedException("El huesped ya esta presente");
 
-        listaHuespedes[tamano] = new Huesped(huesped);
+        }else {
+            //insertar en la posicion encontrada por buscarIndice
+            coleccionHuespedes[tamano] = new Huesped(huesped);
             tamano++;
+
+        }
+
+
 
     }
 
@@ -60,7 +74,7 @@ public class Huespedes {
         if (huesped==null)
             throw new NullPointerException("No puede ser nulo ");
         for (int i = 0; i < tamano; i++) {
-                if (listaHuespedes[i].equals(huesped)) {
+                if (coleccionHuespedes[i].equals(huesped)) {
                     return i;
                 }
             }
@@ -69,13 +83,13 @@ public class Huespedes {
 
 
     private boolean tamanoSuperado(int indice){
-        if (indice > tamano)
+        if (indice >= tamano)
             return true;
 
         return false;
     }
     private boolean capacidadSuperada(int indice) {
-        if (indice > capacidad)
+        if (indice >= capacidad)
             return true;
 
         return false;
@@ -83,7 +97,7 @@ public class Huespedes {
 
     public Huesped buscar(Huesped huesped) {
         if (huesped == null)
-            throw new NullPointerException("no pued ser nulllllllllo!!!!");
+            throw new NullPointerException("Error, el huesped no puede ser nulo.1");
 
         int busqueda = buscarIndice(huesped);
 
@@ -102,14 +116,19 @@ public class Huespedes {
         if (indice != -1) {
             desplazarUnaPosicionHaciaIzquierda(indice);
             tamano--;
+            
+        } else{
+            throw new OperationNotSupportedException("El huésped a borrar no existe");
+            
         }
     }
 
 
         private void desplazarUnaPosicionHaciaIzquierda(int indice) {
             for (int i = indice; i < tamano - 1; i++) {
-                listaHuespedes[i] = listaHuespedes[i + 1];
+                coleccionHuespedes[i] = coleccionHuespedes[i + 1];
             }
+            coleccionHuespedes[tamano-1]=null;
         }
 
 

@@ -32,7 +32,7 @@ public class Reserva {
         setFechaInicioReserva(fechaInicioReserva);
         setFechaFinReserva(fechaFinReserva);
         //this.checkIn=LocalDateTime;
-        this.checkOut=this.checkIn.plusHours(MAX_HORAS_POSTERIOR_CHECKOUT);
+        //this.checkOut=this.checkIn.plusHours(MAX_HORAS_POSTERIOR_CHECKOUT);
         setNumeroPersonas(numeroPersonas);
 
 
@@ -49,6 +49,7 @@ public class Reserva {
         setFechaFinReserva(reserva.getFechaFinReserva());
         setCheckIn(reserva.checkIn);
         setCheckOut(reserva.checkOut);
+        setPrecio(reserva.precio);
         setNumeroPersonas(reserva.getNumeroPersonas());
     }
 
@@ -154,7 +155,8 @@ public class Reserva {
     }
 
     private void setPrecio(double precio) {
-        precio = (habitacion.getPrecio() + regimen.getIncrementoPrecio())* getNumeroPersonas();
+
+        //precio = (habitacion.getPrecio() + regimen.getIncrementoPrecio())* getNumeroPersonas();
         this.precio = precio;
     }
 
