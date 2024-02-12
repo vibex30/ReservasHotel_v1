@@ -18,7 +18,7 @@ import java.util.Comparator;
 
 
 public class Vista {
-    private  Controlador controlador;
+    private  static Controlador controlador;
 
 /*
     public static final int CAPACIDAD=1;
@@ -35,13 +35,13 @@ public class Vista {
 
        this.controlador=controlador;
     }
-    private void comenzar(){
+    public void comenzar(){
         do{
             Consola.mostrarMenu();
             ejecutarOpcion(Consola.elegirOpcion());
         }while(!salir);
     }
-    private void terminar(){
+    public void terminar(){
         System.out.println("Adiossss");
     }
 
@@ -94,13 +94,13 @@ public class Vista {
     private void realizarCheckIn(){
         Huesped huesped=Consola.getHuespedPorDni();
         Reserva[] lita =controlador.getReserva(huesped);
-        LocalDateTime fechaInic=Consola.leerFechaHora(Entrada.cadena());
+        LocalDateTime fechaInic= Consola.leerFechaHora(Entrada.cadena()).atStartOfDay();
 
     }
     private static void insertarHuesped(){
 
         try{
-            huespedes.insertar(Consola.leerHuesped());
+            controlador.insertar(Consola.leerHuesped());
             System.out.println("Ha insertado un huésped");
 
         }catch (OperationNotSupportedException | IllegalArgumentException | NullPointerException e){
@@ -115,7 +115,7 @@ public class Vista {
     private static void buscarHuesped(){
 
         try {
-            huespedes.buscar(Consola.leerHuesped());
+            controlador.buscar(Consola.leerHuesped());
             System.out.println("He buscado un huésped");
 
         }catch (NullPointerException|IllegalArgumentException e){
@@ -124,11 +124,16 @@ public class Vista {
         }
 
     }
+//Es el controlador al que le tengo que pedir los datos!!
+
+
+
+
 
     private static void borrarHuesped(){
 
         try {
-            huespedes.borrar(Consola.leerHuesped());
+            controlador.borrar(Consola.leerHuesped());
             System.out.println("He borrado un huésped");
 
         }catch (OperationNotSupportedException e){
@@ -140,7 +145,7 @@ public class Vista {
 
     private static void mostrarHuespedes(){
         try{
-            for(Huesped cliente: huespedes.get())
+            for(Huesped cliente: controlador.getHuespedes())
                 System.out.println(cliente);
         }catch (NullPointerException|IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -150,7 +155,7 @@ public class Vista {
 
     private static void insertarHabitacion(){
         try{
-            habitaciones.insertar(Consola.leerHabitacion());
+            controlador.insertar(Consola.leerHabitacion());
             System.out.println("Ha insertado una habitación");
 
         }catch (OperationNotSupportedException | IllegalArgumentException | NullPointerException e){
@@ -165,7 +170,7 @@ public class Vista {
 
     private static void buscarHabitacion(){
         try {
-            habitaciones.buscar(Consola.leerHabitacionPorIdentificador());
+            controlador.buscar(Consola.leerHabitacionPorIdentificador());
             System.out.println("He buscado una habitación");
 
         }catch (NullPointerException|IllegalArgumentException e){
@@ -176,7 +181,7 @@ public class Vista {
 
     private static void borrarHabitacion(){
         try {
-            habitaciones.borrar(Consola.leerHabitacionPorIdentificador());
+            controlador.borrar(Consola.leerHabitacionPorIdentificador());
             System.out.println("He borrado una  habitación");
 
         }catch (OperationNotSupportedException e){
@@ -184,10 +189,10 @@ public class Vista {
             System.out.println(e.getMessage());
         }
     }
-
+//TODO ME HE QUEDADO AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private static void mostrarHabitaciones(){
         try{
-            for(Habitacion cliente: habitaciones.get())
+            for(Habitacion cliente: controlador.getHabitaciones())
                 System.out.println(habitaciones);
         }catch (NullPointerException|IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -204,7 +209,7 @@ public class Vista {
 
 
             try {
-                reservas.insertar(reservaQueQuiero);
+                controlador.insertar(reservaQueQuiero);
                 System.out.println("Ha insertado una reserva");
 
             } catch (OperationNotSupportedException | IllegalArgumentException | NullPointerException e) {
@@ -218,7 +223,7 @@ public class Vista {
 
     private void listarReservas(Huesped huesped){
         try{
-            for(Reserva reserva: reservas.getReservas(huesped))
+            for(Reserva reserva: controlador.getReserva(huesped));
                 System.out.println(reserva);
 
         }catch (NullPointerException|IllegalArgumentException e){
@@ -247,7 +252,7 @@ public class Vista {
 
     private static void anularReserva(){
         try {
-            reservas.borrar(Consola.leerReserva());
+            controlador.borrar(Consola.leerReserva());
             System.out.println("He anulado una reserva");
 
         }catch (OperationNotSupportedException e){

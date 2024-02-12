@@ -58,11 +58,11 @@ public class Reserva {
 
 
     public Huesped getHuesped() {
-        return huesped;
+        return new Huesped(huesped);
     }
 
     public Habitacion getHabitacion() {
-        return habitacion;
+        return new Habitacion(habitacion);
     }
 
     public Regimen getRegimen() {
@@ -99,13 +99,13 @@ public class Reserva {
     public void setHuesped(Huesped huesped) {
         if (huesped==null)
             throw new NullPointerException("ERROR: El huésped de una reserva no puede ser nulo.");
-        this.huesped = huesped;
+        this.huesped = new Huesped(huesped);
     }
 
     public void setHabitacion(Habitacion habitacion) {
         if (habitacion==null)
             throw new NullPointerException("ERROR: La habitación de una reserva no puede ser nula.");
-        this.habitacion = habitacion;
+        this.habitacion = new Habitacion(habitacion);
     }
 
     public void setRegimen(Regimen regimen) {
